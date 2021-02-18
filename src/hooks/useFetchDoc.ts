@@ -1,53 +1,55 @@
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
-import { State } from "../redux/types";
 import useReduxMethods from "../redux/useReduxMethods";
 import { getLength } from "../utilities";
 
-const useFetchDoc = (): (() => void) => {
-  const { url } = useSelector<State, State>((state) => state);
+const useFetchDoc = (): ((url: string) => void) => {
   const {
+    readUrl,
     setLoadingActive,
     setLoadingDeactive,
     storeCount,
     raiseError,
   } = useReduxMethods();
 
-  const fetchDoc = useCallback(async () => {
-    if (url) {
-      setLoadingActive();
+  const fetchDoc = useCallback(
+    async (url: string) => {
+      if (url) {
+        setLoadingActive();
 
-      try {
-        new URL(url);
+        try {
+          new URL(url);
 
-        const response = await fetch(
-          "https://lit-ocean-53181.herokuapp.com/get-file",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "Application/json",
-            },
-            body: JSON.stringify({ url }),
+          const response = await fetch(
+            "https://lit-ocean-53181.herokuapp.com/get-file",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "Application/json",
+              },
+              body: JSON.stringify({ url }),
+            }
+          );
+
+          const doc = await response.json();
+
+          const length = getLength(doc.html);
+          storeCount(length);
+          setLoadingDeactive();
+        } catch (error) {
+          if (error.message === "Failed to construct 'URL': Invalid URL") {
+            const newUrl = `https://${url}`;
+            fetchDoc(newUrl);
+            readUrl(newUrl);
+          } else {
+            raiseError(error.message);
           }
-        );
-
-        const doc = await response.json();
-
-        const length = getLength(doc.html);
-        storeCount(length);
-      } catch (error) {
-        if (error.message === "Failed to construct 'URL': Invalid URL")
-          raiseError("Enter a valid url");
-        else {
-          raiseError("Something went wrong!");
         }
+      } else {
+        raiseError("Write Something");
       }
-
-      setLoadingDeactive();
-    } else {
-      raiseError("Write Something");
-    }
-  }, [setLoadingActive, setLoadingDeactive, url, storeCount, raiseError]);
+    },
+    [setLoadingActive, setLoadingDeactive, storeCount, raiseError, readUrl]
+  );
 
   return fetchDoc;
 };

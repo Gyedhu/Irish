@@ -15,6 +15,10 @@ const Form: React.FC = () => {
     readUrl(event.currentTarget.value);
   };
 
+  const submit = () => {
+    fetchDoc(url);
+  };
+
   return (
     <FormContainer>
       <Input
@@ -24,7 +28,7 @@ const Form: React.FC = () => {
         type='text'
         value={url}
       />
-      <Button className='submitButton' onClick={fetchDoc}>
+      <Button className='submitButton' onClick={submit}>
         Submit
       </Button>
     </FormContainer>
