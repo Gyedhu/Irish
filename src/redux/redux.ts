@@ -1,4 +1,4 @@
-import { SET_COUNT, SET_LOADING, SET_URL } from "./constants";
+import { SET_COUNT, SET_ERROR, SET_LOADING, SET_URL } from "./constants";
 import { ActionsTypes, State } from "./types";
 
 const initialState: State = {
@@ -6,6 +6,7 @@ const initialState: State = {
   loading: false,
   count: -1,
   resultText: "",
+  error: "",
 };
 
 const reducer = (state: State = initialState, action: ActionsTypes): State => {
@@ -15,6 +16,7 @@ const reducer = (state: State = initialState, action: ActionsTypes): State => {
         ...state,
         url: action.payload,
         count: -1,
+        error: "",
       };
 
     case SET_LOADING:
@@ -27,6 +29,12 @@ const reducer = (state: State = initialState, action: ActionsTypes): State => {
       return {
         ...state,
         count: action.payload,
+      };
+
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:

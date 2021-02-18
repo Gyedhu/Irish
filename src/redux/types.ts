@@ -1,10 +1,11 @@
-import { SET_COUNT, SET_LOADING, SET_URL } from "./constants";
+import { SET_COUNT, SET_ERROR, SET_LOADING, SET_URL } from "./constants";
 
 export interface State {
   url: string;
   loading: boolean;
   count: number;
   resultText: string;
+  error: string;
 }
 
 export interface SetUrl {
@@ -22,4 +23,9 @@ export interface SetCount {
   payload: number;
 }
 
-export type ActionsTypes = SetUrl | SetLoading | SetCount;
+export interface SetError {
+  type: typeof SET_ERROR;
+  payload: string;
+}
+
+export type ActionsTypes = SetUrl | SetLoading | SetCount | SetError;

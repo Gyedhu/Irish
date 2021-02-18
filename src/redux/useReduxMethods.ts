@@ -1,12 +1,13 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setCount, setLoading, setUrl } from "./actions";
+import { setCount, setError, setLoading, setUrl } from "./actions";
 
 interface ReturnType {
   readUrl: (url: string) => void;
   setLoadingActive: () => void;
   setLoadingDeactive: () => void;
   storeCount: (count: number) => void;
+  raiseError: (error: string) => void;
 }
 
 const useReduxMethods = (): ReturnType => {
@@ -34,7 +35,20 @@ const useReduxMethods = (): ReturnType => {
     [dispatch]
   );
 
-  return { readUrl, setLoadingActive, setLoadingDeactive, storeCount };
+  const raiseError = useCallback(
+    (error: string) => {
+      dispatch(setError(error));
+    },
+    [dispatch]
+  );
+
+  return {
+    readUrl,
+    setLoadingActive,
+    setLoadingDeactive,
+    storeCount,
+    raiseError,
+  };
 };
 
 export default useReduxMethods;

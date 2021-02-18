@@ -10,6 +10,7 @@ const useFetchDoc = (): (() => void) => {
     setLoadingActive,
     setLoadingDeactive,
     storeCount,
+    raiseError,
   } = useReduxMethods();
 
   const fetchDoc = useCallback(async () => {
@@ -36,15 +37,17 @@ const useFetchDoc = (): (() => void) => {
         storeCount(length);
       } catch (error) {
         if (error.message === "Failed to construct 'URL': Invalid URL")
-          alert("Enter a valid url");
+          raiseError("Enter a valid url");
         else {
-          alert("Something went wrong!");
+          raiseError("Something went wrong!");
         }
       }
 
       setLoadingDeactive();
+    } else {
+      raiseError("Write Something");
     }
-  }, [setLoadingActive, setLoadingDeactive, url, storeCount]);
+  }, [setLoadingActive, setLoadingDeactive, url, storeCount, raiseError]);
 
   return fetchDoc;
 };
