@@ -29,11 +29,14 @@ const useFetchDoc = (): ((url: string) => void) => {
               body: JSON.stringify({ url }),
             }
           );
+          if (response.status === 400) {
+            raiseError("Please double check you url");
+          } else {
+            const doc = await response.json();
 
-          const doc = await response.json();
-
-          const length = getLength(doc.html);
-          storeCount(length);
+            const length = getLength(doc.html);
+            storeCount(length);
+          }
           setLoadingDeactive();
         } catch (error) {
           if (error.message === "Failed to construct 'URL': Invalid URL") {
