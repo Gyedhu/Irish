@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, FormContainer, Input } from "./style";
 import { useSelector } from "react-redux";
-import { useFetchDoc } from "../../hooks";
-import { State } from "../../redux/types";
-import useReduxMethods from "../../redux/useReduxMethods";
+import { Button, Input, View } from "../components";
+import { useFetchDoc } from "../hooks";
+import { State } from "../redux/types";
+import useReduxMethods from "../redux/useReduxMethods";
 
-const Form: React.FC = () => {
+const URLForm: React.FC = () => {
   const { readUrl } = useReduxMethods();
   const fetchDoc = useFetchDoc();
 
@@ -20,10 +20,11 @@ const Form: React.FC = () => {
   };
 
   return (
-    <FormContainer>
+    <View type='vertical'>
       <Input
         className='input'
         onChange={_readUrl}
+        fitInFlex
         placeholder='Type here'
         type='text'
         value={url}
@@ -31,8 +32,8 @@ const Form: React.FC = () => {
       <Button className='submitButton' onClick={submit}>
         Submit
       </Button>
-    </FormContainer>
+    </View>
   );
 };
 
-export default Form;
+export default URLForm;

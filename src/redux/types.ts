@@ -1,11 +1,14 @@
-import { SET_COUNT, SET_ERROR, SET_LOADING, SET_URL } from "./constants";
+import { SET_COUNT, SET_NOTIFICATION, SET_URL } from "./constants";
+
+export interface Notification {
+  message: string;
+  type: "loading" | "error";
+}
 
 export interface State {
   url: string;
-  loading: boolean;
   count: number;
-  resultText: string;
-  error: string;
+  notification: Notification | null;
 }
 
 export interface SetUrl {
@@ -13,19 +16,14 @@ export interface SetUrl {
   payload: string;
 }
 
-export interface SetLoading {
-  type: typeof SET_LOADING;
-  payload: boolean;
-}
-
 export interface SetCount {
   type: typeof SET_COUNT;
   payload: number;
 }
 
-export interface SetError {
-  type: typeof SET_ERROR;
-  payload: string;
+export interface SetNotification {
+  type: typeof SET_NOTIFICATION;
+  payload: Notification | null;
 }
 
-export type ActionsTypes = SetUrl | SetLoading | SetCount | SetError;
+export type ActionsTypes = SetUrl | SetCount | SetNotification;

@@ -1,22 +1,19 @@
-import { SET_COUNT, SET_ERROR, SET_LOADING, SET_URL } from "./constants";
-import { SetCount, SetError, SetLoading, SetUrl } from "./types";
+import { SET_COUNT, SET_NOTIFICATION, SET_URL } from "./constants";
+import { SetCount, SetNotification, SetUrl } from "./types";
 
-export const setUrl = (payload: string): SetUrl => ({
+export const setUrl = (payload: SetUrl["payload"]): SetUrl => ({
   type: SET_URL,
   payload,
 });
 
-export const setLoading = (payload: boolean): SetLoading => ({
-  type: SET_LOADING,
-  payload,
-});
-
-export const setCount = (payload: number): SetCount => ({
+export const setCount = (payload: SetCount["payload"]): SetCount => ({
   type: SET_COUNT,
   payload,
 });
 
-export const setError = (payload: string): SetError => ({
-  type: SET_ERROR,
+export const setNotification = (
+  payload: SetNotification["payload"]
+): SetNotification => ({
+  type: SET_NOTIFICATION,
   payload,
 });

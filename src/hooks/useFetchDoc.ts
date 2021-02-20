@@ -5,16 +5,16 @@ import { getLength } from "../utilities";
 const useFetchDoc = (): ((url: string) => void) => {
   const {
     readUrl,
-    setLoadingActive,
-    setLoadingDeactive,
     storeCount,
-    raiseError,
+    popNotification,
+    loadingNotification,
+    errorNotification,
   } = useReduxMethods();
 
   const fetchDoc = useCallback(
     async (url: string) => {
       if (url) {
-        setLoadingActive();
+        loadingNotification();
 
         try {
           new URL(url);
@@ -30,28 +30,34 @@ const useFetchDoc = (): ((url: string) => void) => {
             }
           );
           if (response.status === 400) {
-            raiseError("Please double check you url");
+            errorNotification("Please double check you url");
           } else {
             const doc = await response.json();
 
             const length = getLength(doc.html);
             storeCount(length);
+            popNotification();
           }
-          setLoadingDeactive();
         } catch (error) {
           if (error.message === "Failed to construct 'URL': Invalid URL") {
             const newUrl = `https://${url}`;
             fetchDoc(newUrl);
             readUrl(newUrl);
           } else {
-            raiseError(error.message);
+            errorNotification(error.message);
           }
         }
       } else {
-        raiseError("Write Something");
+        errorNotification("Write Something");
       }
     },
-    [setLoadingActive, setLoadingDeactive, storeCount, raiseError, readUrl]
+    [
+      storeCount,
+      errorNotification,
+      popNotification,
+      readUrl,
+      loadingNotification,
+    ]
   );
 
   return fetchDoc;

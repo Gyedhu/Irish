@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setCount, setError, setLoading, setUrl } from "./actions";
+import { setCount, setNotification, setUrl } from "./actions";
 
 interface ReturnType {
   readUrl: (url: string) => void;
-  setLoadingActive: () => void;
-  setLoadingDeactive: () => void;
   storeCount: (count: number) => void;
-  raiseError: (error: string) => void;
+  popNotification: () => void;
+  loadingNotification: () => void;
+  errorNotification: (message: string) => void;
 }
 
 const useReduxMethods = (): ReturnType => {
@@ -20,14 +20,6 @@ const useReduxMethods = (): ReturnType => {
     [dispatch]
   );
 
-  const setLoadingActive = useCallback(() => {
-    dispatch(setLoading(true));
-  }, [dispatch]);
-
-  const setLoadingDeactive = useCallback(() => {
-    dispatch(setLoading(false));
-  }, [dispatch]);
-
   const storeCount = useCallback(
     (count: number) => {
       dispatch(setCount(count));
@@ -35,19 +27,41 @@ const useReduxMethods = (): ReturnType => {
     [dispatch]
   );
 
-  const raiseError = useCallback(
-    (error: string) => {
-      dispatch(setError(error));
+  const popNotification = useCallback(() => {
+    dispatch(setNotification(null));
+  }, [dispatch]);
+
+  const loadingNotification = useCallback(() => {
+    dispatch(
+      setNotification({
+        message: "Loading, please wait",
+        type: "loading",
+      })
+    );
+  }, [dispatch]);
+
+  const errorNotification = useCallback(
+    (message: string) => {
+      dispatch(
+        setNotification({
+          message,
+          type: "error",
+        })
+      );
+
+      setTimeout(() => {
+        dispatch(setNotification(null));
+      }, 2000);
     },
     [dispatch]
   );
 
   return {
     readUrl,
-    setLoadingActive,
-    setLoadingDeactive,
     storeCount,
-    raiseError,
+    popNotification,
+    loadingNotification,
+    errorNotification,
   };
 };
 
