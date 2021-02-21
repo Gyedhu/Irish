@@ -5,7 +5,12 @@ import { useCallback } from "react";
 import useReduxMethods from "../redux/useReduxMethods";
 
 const useSignout = (): (() => void) => {
-  const { notification, loadingNotification } = useReduxMethods();
+  const {
+    notification,
+    loadingNotification,
+    storeRecentList,
+    readUrl,
+  } = useReduxMethods();
   const { gotoSignin } = useRouterMethods();
 
   const signout = useCallback(async () => {
@@ -13,7 +18,9 @@ const useSignout = (): (() => void) => {
     await firebase.auth().signOut();
     gotoSignin();
     notification("See you again");
-  }, [gotoSignin, notification, loadingNotification]);
+    storeRecentList([]);
+    readUrl("");
+  }, [readUrl, gotoSignin, notification, loadingNotification, storeRecentList]);
 
   return signout;
 };

@@ -1,10 +1,8 @@
+import { useCallback } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/app";
-import { useCallback } from "react";
 import useReduxMethods from "../redux/useReduxMethods";
-import { useSelector } from "react-redux";
-import { State } from "../redux/types";
 
 const useFetchRecent = (): (() => void) => {
   const {
@@ -13,11 +11,9 @@ const useFetchRecent = (): (() => void) => {
     storeRecentList,
   } = useReduxMethods();
 
-  const { recentList } = useSelector<State, State>((state) => state);
-
   const fetchRecent = useCallback(async () => {
     const { currentUser } = firebase.auth();
-    if (currentUser && !recentList) {
+    if (currentUser) {
       loadingNotification();
       const data = await firebase
         .database()
@@ -34,7 +30,7 @@ const useFetchRecent = (): (() => void) => {
         notification("Loading compleated");
       } else notification("No data available");
     }
-  }, [notification, loadingNotification, storeRecentList, recentList]);
+  }, [notification, loadingNotification, storeRecentList]);
 
   return fetchRecent;
 };

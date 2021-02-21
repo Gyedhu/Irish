@@ -12,6 +12,7 @@ const initialState: State = {
   url: "",
   count: -1,
   notification: null,
+  recentList: [],
   recentVisibility: false,
 };
 

@@ -16,7 +16,7 @@ export interface State {
   url: string;
   count: number;
   notification: Notification | null;
-  recentList?: Array<[string, string]>;
+  recentList: Array<[string, string]>;
   recentVisibility?: boolean;
 }
 
