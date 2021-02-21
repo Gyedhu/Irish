@@ -1,12 +1,12 @@
 import React from "react";
 import { Notification } from "./containers";
-import { WordCounter } from "./pages";
+import Router from "./router";
 
 const App: React.FC = () => {
   return (
     <React.Fragment>
       <Notification />
-      <WordCounter />
+      <Router />
     </React.Fragment>
   );
 };

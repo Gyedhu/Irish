@@ -8,9 +8,8 @@ const Notification: React.FC = () => {
 
   return (
     <View
-      type='notification'
-      error={notification ? notification.type === "error" : false}
-      active={notification !== null}
+      justify='center'
+      status={notification ? notification.type : undefined}
     >
       {notification && notification.message}
     </View>

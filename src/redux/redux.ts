@@ -1,10 +1,16 @@
-import { SET_COUNT, SET_NOTIFICATION, SET_URL } from "./constants";
+import {
+  SET_COUNT,
+  SET_NOTIFICATION,
+  SET_URL,
+  SET_RECENT_STATE,
+} from "./constants";
 import { ActionsTypes, State } from "./types";
 
 const initialState: State = {
   url: "",
   count: -1,
   notification: null,
+  recent: false,
 };
 
 const reducer = (state: State = initialState, action: ActionsTypes): State => {
@@ -26,6 +32,12 @@ const reducer = (state: State = initialState, action: ActionsTypes): State => {
       return {
         ...state,
         notification: action.payload,
+      };
+
+    case SET_RECENT_STATE:
+      return {
+        ...state,
+        recent: action.payload,
       };
 
     default:

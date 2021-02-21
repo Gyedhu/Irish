@@ -1,13 +1,15 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setCount, setNotification, setUrl } from "./actions";
+import { setCount, setNotification, setUrl, setRecentState } from "./actions";
 
 interface ReturnType {
   readUrl: (url: string) => void;
   storeCount: (count: number) => void;
   popNotification: () => void;
+  notification: (message: string) => void;
   loadingNotification: () => void;
   errorNotification: (message: string) => void;
+  changeRecentState: (status: boolean) => void;
 }
 
 const useReduxMethods = (): ReturnType => {
@@ -31,11 +33,27 @@ const useReduxMethods = (): ReturnType => {
     dispatch(setNotification(null));
   }, [dispatch]);
 
+  const notification = useCallback(
+    (message: string) => {
+      dispatch(
+        setNotification({
+          message,
+          type: "popup",
+        })
+      );
+
+      setTimeout(() => {
+        dispatch(setNotification(null));
+      }, 2000);
+    },
+    [dispatch]
+  );
+
   const loadingNotification = useCallback(() => {
     dispatch(
       setNotification({
-        message: "Loading, please wait",
-        type: "loading",
+        message: "Please wait",
+        type: "popup",
       })
     );
   }, [dispatch]);
@@ -56,12 +74,21 @@ const useReduxMethods = (): ReturnType => {
     [dispatch]
   );
 
+  const changeRecentState = useCallback(
+    (status: boolean) => {
+      dispatch(setRecentState(status));
+    },
+    [dispatch]
+  );
+
   return {
     readUrl,
     storeCount,
     popNotification,
+    notification,
     loadingNotification,
     errorNotification,
+    changeRecentState,
   };
 };
 

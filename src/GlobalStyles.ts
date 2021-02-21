@@ -29,11 +29,6 @@ const GlobalStyle = createGlobalStyle`
   button {
     font-size: 18px;
   }
-
-  input:focus,
-  button:focus {
-    outline: 1px dashed #273630;
-  }
 `;
 
 export default GlobalStyle;

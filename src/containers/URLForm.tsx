@@ -1,18 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button, Input, View } from "../components";
-import { useFetchDoc } from "../hooks";
+import { useFetchDoc, useSignout } from "../hooks";
 import { State } from "../redux/types";
 import useReduxMethods from "../redux/useReduxMethods";
 
 const URLForm: React.FC = () => {
-  const { readUrl } = useReduxMethods();
+  const { readUrl, changeRecentState } = useReduxMethods();
+  const signout = useSignout();
   const fetchDoc = useFetchDoc();
 
-  const { url } = useSelector<State, State>((state) => state);
+  const { url, recent } = useSelector<State, State>((state) => state);
 
   const _readUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
     readUrl(event.currentTarget.value);
+  };
+
+  const toggleRecent = () => {
+    changeRecentState(!recent);
   };
 
   const submit = () => {
@@ -20,7 +25,7 @@ const URLForm: React.FC = () => {
   };
 
   return (
-    <View type='vertical'>
+    <View gap>
       <Input
         className='input'
         onChange={_readUrl}
@@ -29,7 +34,7 @@ const URLForm: React.FC = () => {
         type='text'
         value={url}
       />
-      <Button className='submitButton' onClick={submit}>
+      <Button className='submitButton' filled fitInMobile onClick={submit}>
         Submit
       </Button>
     </View>

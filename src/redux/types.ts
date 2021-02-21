@@ -1,14 +1,20 @@
-import { SET_COUNT, SET_NOTIFICATION, SET_URL } from "./constants";
+import {
+  SET_COUNT,
+  SET_NOTIFICATION,
+  SET_URL,
+  SET_RECENT_STATE,
+} from "./constants";
 
 export interface Notification {
   message: string;
-  type: "loading" | "error";
+  type: "popup" | "error";
 }
 
 export interface State {
   url: string;
   count: number;
   notification: Notification | null;
+  recent?: boolean;
 }
 
 export interface SetUrl {
@@ -26,4 +32,9 @@ export interface SetNotification {
   payload: Notification | null;
 }
 
-export type ActionsTypes = SetUrl | SetCount | SetNotification;
+export interface SetRecentState {
+  type: typeof SET_RECENT_STATE;
+  payload: boolean;
+}
+
+export type ActionsTypes = SetUrl | SetCount | SetNotification | SetRecentState;

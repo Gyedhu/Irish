@@ -3,13 +3,18 @@ import { Line, View } from "../components";
 import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Logo: React.FC = () => {
+interface Props {
+  title?: string;
+}
+
+const Logo: React.FC<Props> = ({ title }: Props) => {
   return (
-    <View>
+    <View align='center' direction='column'>
       <FontAwesomeIcon icon={faShieldAlt} size='3x' />
       <Line fancy size='small'>
         Irish
       </Line>
+      {title && <Line fancy>{title}</Line>}
     </View>
   );
 };

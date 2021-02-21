@@ -4,7 +4,7 @@ import { Logo } from ".";
 
 const Title: React.FC = () => {
   return (
-    <View>
+    <View align='center' direction='column'>
       <Logo />
       <Line center className='title' size='big'>
         Webpage Word Counter

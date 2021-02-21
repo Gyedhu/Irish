@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import useReduxMethods from "../redux/useReduxMethods";
 import { getLength } from "../utilities";
+import { usePushToHistory } from ".";
 
 const useFetchDoc = (): ((url: string) => void) => {
   const {
@@ -10,6 +11,8 @@ const useFetchDoc = (): ((url: string) => void) => {
     loadingNotification,
     errorNotification,
   } = useReduxMethods();
+
+  const pushHistory = usePushToHistory();
 
   const fetchDoc = useCallback(
     async (url: string) => {
@@ -37,6 +40,7 @@ const useFetchDoc = (): ((url: string) => void) => {
             const length = getLength(doc.html);
             storeCount(length);
             popNotification();
+            pushHistory(url);
           }
         } catch (error) {
           if (error.message === "Failed to construct 'URL': Invalid URL") {
@@ -57,6 +61,7 @@ const useFetchDoc = (): ((url: string) => void) => {
       popNotification,
       readUrl,
       loadingNotification,
+      pushHistory,
     ]
   );
 
