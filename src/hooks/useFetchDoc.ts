@@ -10,6 +10,7 @@ const useFetchDoc = (): ((url: string) => void) => {
     popNotification,
     loadingNotification,
     errorNotification,
+    addToRecentList,
   } = useReduxMethods();
 
   const pushHistory = usePushToHistory();
@@ -41,6 +42,7 @@ const useFetchDoc = (): ((url: string) => void) => {
             storeCount(length);
             popNotification();
             pushHistory(url);
+            addToRecentList([url, new Date().toLocaleString()]);
           }
         } catch (error) {
           if (error.message === "Failed to construct 'URL': Invalid URL") {
@@ -62,6 +64,7 @@ const useFetchDoc = (): ((url: string) => void) => {
       readUrl,
       loadingNotification,
       pushHistory,
+      addToRecentList,
     ]
   );
 

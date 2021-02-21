@@ -12,16 +12,14 @@ const usePushToHistory = (): ((url: string) => void) => {
       const { currentUser } = firebase.auth();
 
       if (currentUser) {
-        if (currentUser.email) {
-          try {
-            const newUrl = await firebase
-              .database()
-              .ref(`/${currentUser.uid}/urls`)
-              .push();
-            await newUrl.set([url, new Date().toLocaleString()]);
-          } catch (error) {
-            errorNotification(error.message);
-          }
+        try {
+          const newUrl = await firebase
+            .database()
+            .ref(`/${currentUser.uid}/urls`)
+            .push();
+          await newUrl.set([url, new Date().toLocaleString()]);
+        } catch (error) {
+          errorNotification(error.message);
         }
       }
     },

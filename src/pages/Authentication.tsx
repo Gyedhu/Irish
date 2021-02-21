@@ -9,8 +9,10 @@ interface Props {
 const Authentication: React.FC<Props> = ({ type }: Props) => {
   return (
     <View justify='center' pad>
-      {type === "signin" && <Signin />}
-      {type === "signup" && <Signup />}
+      <View align='center' bound='400px' direction='column' gap>
+        {type === "signin" && <Signin />}
+        {type === "signup" && <Signup />}
+      </View>
     </View>
   );
 };

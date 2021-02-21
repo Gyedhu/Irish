@@ -1,6 +1,14 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setCount, setNotification, setUrl, setRecentState } from "./actions";
+import {
+  setCount,
+  setNotification,
+  setUrl,
+  setRecentVisibility,
+  setRecentList,
+  pushToRecentList,
+} from "./actions";
+import { PushToREcentList, SetRecentList } from "./types";
 
 interface ReturnType {
   readUrl: (url: string) => void;
@@ -10,6 +18,8 @@ interface ReturnType {
   loadingNotification: () => void;
   errorNotification: (message: string) => void;
   changeRecentState: (status: boolean) => void;
+  storeRecentList: (list: SetRecentList["payload"]) => void;
+  addToRecentList: (newItem: PushToREcentList["payload"]) => void;
 }
 
 const useReduxMethods = (): ReturnType => {
@@ -76,7 +86,21 @@ const useReduxMethods = (): ReturnType => {
 
   const changeRecentState = useCallback(
     (status: boolean) => {
-      dispatch(setRecentState(status));
+      dispatch(setRecentVisibility(status));
+    },
+    [dispatch]
+  );
+
+  const storeRecentList = useCallback(
+    (list: SetRecentList["payload"]) => {
+      dispatch(setRecentList(list));
+    },
+    [dispatch]
+  );
+
+  const addToRecentList = useCallback(
+    (newItem: PushToREcentList["payload"]) => {
+      dispatch(pushToRecentList(newItem));
     },
     [dispatch]
   );
@@ -89,6 +113,8 @@ const useReduxMethods = (): ReturnType => {
     loadingNotification,
     errorNotification,
     changeRecentState,
+    storeRecentList,
+    addToRecentList,
   };
 };
 

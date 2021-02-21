@@ -13,21 +13,11 @@ interface Props {
   center?: boolean;
   fancy?: boolean;
   size?: FontSize;
-  asTitle?: boolean;
 }
 
 const Line = styled.p<Props>`
-  ${({ center, fancy, size, asTitle }) =>
+  ${({ center, fancy, size }) =>
     css`
-      ${asTitle &&
-      css`
-        background-color: white;
-        border-bottom: 1px solid #ddd;
-        padding: 10px;
-        position: sticky;
-        top: 0;
-        width: 100%;
-      `};
       ${fancy && "font-family: Potta One"};
       font-size: ${size ? fontSize[size] : fontSize["regular"]};
       text-align: ${center && "center"};

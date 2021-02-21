@@ -6,7 +6,7 @@ import GlobalStyle from "./GlobalStyles";
 import store from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdXPGqyGFb2UMiEWiP2AHP5bw64OJJ7kQ",

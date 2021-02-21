@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
   if (count >= 0)
     return (
       <View align='center' direction='column'>
-        <Line>{`${url}`} contains</Line>
+        <Line>{`'${url}'`} contains</Line>
         <Line size='big'>{count}</Line>
         <Line>Words</Line>
       </View>

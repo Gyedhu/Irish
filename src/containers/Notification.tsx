@@ -9,7 +9,7 @@ const Notification: React.FC = () => {
   return (
     <View
       justify='center'
-      status={notification ? notification.type : undefined}
+      popupStatus={notification ? notification.type : undefined}
     >
       {notification && notification.message}
     </View>

@@ -32,7 +32,7 @@ const Button = styled.button<Props>`
   ${({ link }) =>
     link &&
     css`
-      color: #273036;
+      color: #59886b;
       text-decoration: underline;
     `}
 

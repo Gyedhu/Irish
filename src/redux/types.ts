@@ -2,7 +2,9 @@ import {
   SET_COUNT,
   SET_NOTIFICATION,
   SET_URL,
-  SET_RECENT_STATE,
+  SET_RECENT_VISIBILITY,
+  SET_RECENT_LIST,
+  PUSH_TO_RECENT_LIST,
 } from "./constants";
 
 export interface Notification {
@@ -14,7 +16,8 @@ export interface State {
   url: string;
   count: number;
   notification: Notification | null;
-  recent?: boolean;
+  recentList?: Array<[string, string]>;
+  recentVisibility?: boolean;
 }
 
 export interface SetUrl {
@@ -32,9 +35,25 @@ export interface SetNotification {
   payload: Notification | null;
 }
 
-export interface SetRecentState {
-  type: typeof SET_RECENT_STATE;
+export interface SetRecentVisibility {
+  type: typeof SET_RECENT_VISIBILITY;
   payload: boolean;
 }
 
-export type ActionsTypes = SetUrl | SetCount | SetNotification | SetRecentState;
+export interface SetRecentList {
+  type: typeof SET_RECENT_LIST;
+  payload: Array<[string, string]>;
+}
+
+export interface PushToREcentList {
+  type: typeof PUSH_TO_RECENT_LIST;
+  payload: [string, string];
+}
+
+export type ActionsTypes =
+  | SetUrl
+  | SetCount
+  | SetNotification
+  | SetRecentVisibility
+  | SetRecentList
+  | PushToREcentList;

@@ -19,7 +19,7 @@ const Signin: React.FC = () => {
   };
 
   return (
-    <View align='center' bound='400px' direction='column'>
+    <React.Fragment>
       <Logo title='Welcome back' />
       <br />
 
@@ -44,7 +44,7 @@ const Signin: React.FC = () => {
       <Button onClick={gotoSignup} link>
         Create a new account?
       </Button>
-    </View>
+    </React.Fragment>
   );
 };
 

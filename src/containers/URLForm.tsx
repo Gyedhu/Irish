@@ -1,23 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button, Input, View } from "../components";
-import { useFetchDoc, useSignout } from "../hooks";
+import { useFetchDoc } from "../hooks";
 import { State } from "../redux/types";
 import useReduxMethods from "../redux/useReduxMethods";
 
 const URLForm: React.FC = () => {
   const { readUrl, changeRecentState } = useReduxMethods();
-  const signout = useSignout();
   const fetchDoc = useFetchDoc();
 
-  const { url, recent } = useSelector<State, State>((state) => state);
+  const { url, recentVisibility } = useSelector<State, State>((state) => state);
 
   const _readUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
     readUrl(event.currentTarget.value);
   };
 
   const toggleRecent = () => {
-    changeRecentState(!recent);
+    changeRecentState(!recentVisibility);
   };
 
   const submit = () => {
